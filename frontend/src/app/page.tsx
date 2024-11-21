@@ -189,14 +189,6 @@ function FullTokenInteractions() {
 	const [txMessage, setTxMessage] = useState("");
 	const [txStatus, setTxStatus] = useState<"success" | "error" | null>(null);
 	const [allowanceAmount, setAllowanceAmount] = useState<string | null>(null);
-
-	const [transactions, setTransactions] = useState<Array<{
-        type: 'Transfer' | 'Mint',
-        from?: string,
-        to: string,
-        amount: string,
-        timestamp: number
-	}>>([]);
 	
 	// Balance and Contract Hooks
 	const { data: balance, refetch: refetchBalance } = useBalance({
