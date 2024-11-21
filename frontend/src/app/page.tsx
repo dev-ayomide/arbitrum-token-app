@@ -317,7 +317,7 @@ function FullTokenInteractions() {
 							<Button
 								variant="outline"
 								size="icon"
-								onClick={refetchBalance}
+								onClick={() => refetchBalance()} 
 								className="text-blue-600 hover:bg-blue-100"
 							>
 								<RefreshCw className="w-5 h-5" />
@@ -417,7 +417,10 @@ function FullTokenInteractions() {
 						{spenderAddress && (
 							<div className="mt-2">
 								<Button
-									onClick={refetchAllowance}
+									onClick={(event) => {
+										event.preventDefault();
+										refetchAllowance();
+									}}
 									variant="outline"
 									className="w-full text-blue-600 border-blue-600"
 								>
