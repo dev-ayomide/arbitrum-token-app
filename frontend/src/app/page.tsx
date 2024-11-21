@@ -233,7 +233,10 @@ function FullTokenInteractions() {
 		functionName: "transfer",
 		args:
 			recipient && amount
-				? [recipient as `0x${string}`, ethers.utils.parseEther(amount)]
+				? [
+						recipient as `0x${string}`,
+						BigInt(ethers.utils.parseEther(amount).toString()),
+				  ]
 				: undefined,
 	});
 
@@ -260,7 +263,7 @@ function FullTokenInteractions() {
 			spenderAddress && approveAmount
 				? [
 						spenderAddress as `0x${string}`,
-						ethers.utils.parseEther(approveAmount),
+						BigInt(ethers.utils.parseEther(approveAmount).toString()),
 				  ]
 				: undefined,
 	});
@@ -303,36 +306,67 @@ function FullTokenInteractions() {
 				<p>Please connect your wallet to interact with the token hub.</p>
 			</div>
 		);
+	
+	const isWalletConnected = isConnected;
+	
 	useContractEvent({
 		address: contractAddress,
 		abi: contractABI,
 		eventName: "Transfer",
 		listener(logs) {
-			const newTransfers = logs.map((log) => ({
-				type: "Transfer" as const,
-				from: log.args.from,
-				to: log.args.to,
-				amount: ethers.utils.formatEther(log.args.value),
-				timestamp: Date.now(),
-			}));
-			setTransactions((prev) => [...newTransfers, ...prev]);
+			if (isWalletConnected) {
+				const newTransfers = logs.map((log) => {
+					const value = log.args.value;
+					return {
+						type: "Transfer" as const,
+						from: log.args.from,
+						to: log.args.to,
+						amount: value ? ethers.utils.formatEther(value) : "0",
+						timestamp: Date.now(),
+					};
+				});
+				setTransactions((prev) => [...newTransfers, ...prev]);
+			}
 		},
 	});
+
+	if (!isConnected) {
+		return (
+			<div className="text-center text-gray-500 py-10">
+				<Info className="mx-auto mb-4 w-12 h-12 text-blue-500" />
+				<p>Please connect your wallet to interact with the token hub.</p>
+			</div>
+		);
+	}
 
 	useContractEvent({
 		address: contractAddress,
 		abi: contractABI,
 		eventName: "Mint",
 		listener(logs) {
-			const newMints = logs.map((log) => ({
-				type: "Mint" as const,
-				to: log.args.to,
-				amount: ethers.utils.formatEther(log.args.amount),
-				timestamp: Date.now(),
-			}));
-			setTransactions((prev) => [...newMints, ...prev]);
+			if (isWalletConnected) {
+				const newMints = logs.map((log) => {
+					const amount = log.args.amount;
+					return {
+						type: "Mint" as const,
+						to: log.args.to,
+						amount: amount ? ethers.utils.formatEther(amount) : "0",
+						timestamp: Date.now(),
+					};
+				});
+				setTransactions((prev) => [...newMints, ...prev]);
+			}
 		},
-	});	
+	});
+
+	if (!isConnected) {
+		return (
+			<div className="text-center text-gray-500 py-10">
+				<Info className="mx-auto mb-4 w-12 h-12 text-blue-500" />
+				<p>Please connect your wallet to interact with the token hub.</p>
+			</div>
+		);
+	}
 
 	    const renderTransactionHistory = () => (
 				<div className="space-y-2">
