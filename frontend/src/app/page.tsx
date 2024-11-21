@@ -42,13 +42,9 @@ import {
 	Info,
 } from "lucide-react";
 import "@rainbow-me/rainbowkit/styles.css";
-import { config } from "dotenv";
 
-// Load environment variables from .env file
-config({ path: "./env" });
-
-const contractAddress =
-	process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+const contractAddress = process.env
+	.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
 const contractABI = [
 	{
 		name: "mint",
@@ -188,7 +184,7 @@ function FullTokenInteractions() {
 	const [txMessage, setTxMessage] = useState("");
 	const [txStatus, setTxStatus] = useState<"success" | "error" | null>(null);
 	const [allowanceAmount, setAllowanceAmount] = useState<string | null>(null);
-	
+
 	// Balance and Contract Hooks
 	const { data: balance, refetch: refetchBalance } = useBalance({
 		address,
@@ -297,8 +293,6 @@ function FullTokenInteractions() {
 			</div>
 		);
 
-	    
-	
 	const renderTabContent = () => {
 		switch (activeTab) {
 			case "overview":
@@ -317,7 +311,7 @@ function FullTokenInteractions() {
 							<Button
 								variant="outline"
 								size="icon"
-								onClick={() => refetchBalance()} 
+								onClick={() => refetchBalance()}
 								className="text-blue-600 hover:bg-blue-100"
 							>
 								<RefreshCw className="w-5 h-5" />
