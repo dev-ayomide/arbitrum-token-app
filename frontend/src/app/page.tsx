@@ -18,7 +18,6 @@ import {
 	usePrepareContractWrite,
 	useWaitForTransaction,
 	useContractRead,
-	useContractEvent,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
@@ -306,53 +305,6 @@ function FullTokenInteractions() {
 				<p>Please connect your wallet to interact with the token hub.</p>
 			</div>
 		);
-	
-	
-	useContractEvent({
-		address: contractAddress,
-		abi: contractABI,
-		eventName: "Transfer",
-		listener(logs) {
-			const newTransfers = logs.map((log) => {
-				const value = log.args.value;
-				return {
-					type: "Transfer" as const,
-					from: log.args.from,
-					to: log.args.to,
-					amount: value ? ethers.formatUnits(value, 18) : "0",
-					timestamp: Date.now(),
-				};
-			});
-			setTransactions((prev) => [...newTransfers, ...prev]);
-		},
-	});
-
-	useContractEvent({
-		address: contractAddress,
-		abi: contractABI,
-		eventName: "Mint",
-		listener(logs) {
-			const newMints = logs.map((log) => {
-				const amount = log.args.amount;
-				return {
-					type: "Mint" as const,
-					to: log.args.to,
-					amount: amount ? ethers.formatUnits(amount, 18) : "0",
-					timestamp: Date.now(),
-				};
-			});
-			setTransactions((prev) => [...newMints, ...prev]);
-		},
-	});
-
-	if (!isConnected) {
-		return (
-			<div className="text-center text-gray-500 py-10">
-				<Info className="mx-auto mb-4 w-12 h-12 text-blue-500" />
-				<p>Please connect your wallet to interact with the token hub.</p>
-			</div>
-		);
-	}
 
 	    const renderTransactionHistory = () => (
 				<div className="space-y-2">
