@@ -39,7 +39,6 @@ import {
 	ShieldCheck,
 	RefreshCw,
 	CreditCard,
-	Clock,
 	Info,
 } from "lucide-react";
 import "@rainbow-me/rainbowkit/styles.css";
