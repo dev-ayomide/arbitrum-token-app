@@ -330,15 +330,6 @@ function FullTokenInteractions() {
 		},
 	});
 
-	if (!isConnected) {
-		return (
-			<div className="text-center text-gray-500 py-10">
-				<Info className="mx-auto mb-4 w-12 h-12 text-blue-500" />
-				<p>Please connect your wallet to interact with the token hub.</p>
-			</div>
-		);
-	}
-
 	useContractEvent({
 		address: contractAddress,
 		abi: contractABI,
