@@ -298,52 +298,7 @@ function FullTokenInteractions() {
 			</div>
 		);
 
-	    const renderTransactionHistory = () => (
-				<div className="space-y-2">
-					<h3 className="text-lg font-semibold mb-2 flex items-center">
-						<Clock className="mr-2 w-5 h-5 text-blue-600" />
-						Transaction History
-					</h3>
-					{transactions.length === 0 ? (
-						<p className="text-gray-500 text-sm">No transactions yet</p>
-					) : (
-						<div className="max-h-64 overflow-y-auto">
-							{transactions.map((tx, index) => (
-								<div
-									key={index}
-									className="bg-blue-50 rounded-lg p-3 mb-2 last:mb-0 hover:bg-blue-100 transition-colors"
-								>
-									<div className="flex justify-between items-center">
-										<div>
-											<p className="font-medium text-blue-800">
-												{tx.type === "Transfer"
-													? "Token Transfer"
-													: "Token Mint"}
-											</p>
-											{tx.type === "Transfer" && (
-												<p className="text-sm text-gray-600">
-													From: {tx.from?.slice(0, 6)}...{tx.from?.slice(-4)}{" "}
-													To: {tx.to.slice(0, 6)}...{tx.to.slice(-4)}
-												</p>
-											)}
-											{tx.type === "Mint" && (
-												<p className="text-sm text-gray-600">
-													To: {tx.to.slice(0, 6)}...{tx.to.slice(-4)}
-												</p>
-											)}
-										</div>
-										<div className="text-right">
-											<p className="font-bold text-green-600">
-												{tx.amount} Tokens
-											</p>
-										</div>
-									</div>
-								</div>
-							))}
-						</div>
-					)}
-				</div>
-			);
+	    
 	
 	const renderTabContent = () => {
 		switch (activeTab) {
@@ -386,7 +341,6 @@ function FullTokenInteractions() {
 								</Button>
 							))}
 						</div>
-						{renderTransactionHistory()}
 					</div>
 				);
 			case "mint":
