@@ -45,6 +45,14 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 const contractAddress = process.env
 	.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
+
+if (!contractAddress || !projectId) {
+	throw new Error(
+		"Missing NEXT_PUBLIC_CONTRACT_ADDRESS or NEXT_PUBLIC_PROJECT_ID in .env file"
+	);
+}
+
 const contractABI = [
 	{
 		name: "mint",
@@ -116,7 +124,7 @@ const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
 	appName: "Arbitrum Token App",
-	projectId: process.env.NEXT_PUBLIC_PROJECT_ID || "",
+	projectId,
 	chains,
 });
 
