@@ -307,26 +307,23 @@ function FullTokenInteractions() {
 			</div>
 		);
 	
-	const isWalletConnected = isConnected;
 	
 	useContractEvent({
 		address: contractAddress,
 		abi: contractABI,
 		eventName: "Transfer",
 		listener(logs) {
-			if (isWalletConnected) {
-				const newTransfers = logs.map((log) => {
-					const value = log.args.value;
-					return {
-						type: "Transfer" as const,
-						from: log.args.from,
-						to: log.args.to,
-						amount: value ? ethers.utils.formatEther(value) : "0",
-						timestamp: Date.now(),
-					};
-				});
-				setTransactions((prev) => [...newTransfers, ...prev]);
-			}
+			const newTransfers = logs.map((log) => {
+				const value = log.args.value;
+				return {
+					type: "Transfer" as const,
+					from: log.args.from,
+					to: log.args.to,
+					amount: value ? ethers.formatUnits(value, 18) : "0",
+					timestamp: Date.now(),
+				};
+			});
+			setTransactions((prev) => [...newTransfers, ...prev]);
 		},
 	});
 
@@ -335,18 +332,16 @@ function FullTokenInteractions() {
 		abi: contractABI,
 		eventName: "Mint",
 		listener(logs) {
-			if (isWalletConnected) {
-				const newMints = logs.map((log) => {
-					const amount = log.args.amount;
-					return {
-						type: "Mint" as const,
-						to: log.args.to,
-						amount: amount ? ethers.utils.formatEther(amount) : "0",
-						timestamp: Date.now(),
-					};
-				});
-				setTransactions((prev) => [...newMints, ...prev]);
-			}
+			const newMints = logs.map((log) => {
+				const amount = log.args.amount;
+				return {
+					type: "Mint" as const,
+					to: log.args.to,
+					amount: amount ? ethers.formatUnits(amount, 18) : "0",
+					timestamp: Date.now(),
+				};
+			});
+			setTransactions((prev) => [...newMints, ...prev]);
 		},
 	});
 
