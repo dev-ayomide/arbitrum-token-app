@@ -134,6 +134,7 @@ export default function ArbitrumTokenApp() {
 				<Input
 					type="text"
 					placeholder="Amount"
+          
 					value={amount}
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setAmount(e.target.value)
