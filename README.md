@@ -6,6 +6,7 @@
 Token Management Hub is a comprehensive, user-friendly web3 application built on Arbitrum Sepolia testnet that provides seamless token interactions for blockchain enthusiasts and developers. It offers an intuitive interface for minting, transferring, and managing ERC-20 tokens directly from your web browser.
 
 LOOM VIDEO - https://www.loom.com/share/78569522fda14f428cfdbdbca0956d1b?sid=96a85380-3ae1-44dc-8dd7-010b7370f381
+
 DEPLOYED APP - https://arbitrum-token-app.vercel.app
 
 ### Unique Approach
